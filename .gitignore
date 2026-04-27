@@ -1,0 +1,11 @@
+#python
+.venv/
+__pycache__/
+*.pyc
+
+#environment
+.env
+
+#data
+data/
+*.mbox
