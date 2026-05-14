@@ -9,10 +9,19 @@ from email.parser import BytesParser
 def html_to_text(html):
     soup = BeautifulSoup(html, "html.parser")
 
+    for element in soup(['script', 'style', 'meta', 'noscript']):
+        element.decompose()
+
+    return soup.get_text(separator=' ', strip=True)
+
 
 def get_body(msg):
     if not msg.is_multipart():
-        return msg.get_content()
+        content = msg.get_content()
+        if msg.get_content_type() == "text/html":
+            return html_to_text(content)
+        return content
+
     plain = None
     html = None
 
