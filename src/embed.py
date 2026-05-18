@@ -29,7 +29,7 @@ else:
                 "date"      : datetime.isoformat(e.date) if e.date else ""
             }
             for e in batch
-            ],)
+            ])
 
         print(f"Added batch {i//batch_size + 1}")
 
