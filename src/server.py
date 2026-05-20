@@ -26,8 +26,11 @@ def search_emails(query:str, n_results:int=5) -> str:
 
     output = []
 
-    for i, doc in enumerate(results["documents"][0]):
-        meta = results["metadatas"][0][i]
+    docs = results["documents"][0] if results["documents"] else []
+    metas = results["metadatas"][0] if results["metadatas"] else []
+
+    for i, doc in enumerate(docs):
+        meta = metas[i]
         from_address = meta["from"]
         to_address = meta["to"]
         content = [
@@ -55,8 +58,12 @@ def get_recent_emails(days:int = 1) -> str:
 
 
     output = []
-    for i, doc in enumerate(results["documents"][0]):
-        meta = results["metadatas"][i]
+
+    docs = results["documents"] if results["documents"] else []
+    metas = results["metadatas"] if results["metadatas"] else []
+
+    for i, doc in enumerate(docs):
+        meta = metas[i]
         from_address = meta["from"]
         to_address = meta["to"]
         content = [
@@ -71,7 +78,4 @@ def get_recent_emails(days:int = 1) -> str:
 
 
 if __name__ == "__main__":
-    res1 = search_emails(query="hsbc")
-    res2 = get_recent_emails(40)
-
-    print(res1 + "\n" + res2)
+    mcp.run(transport="stdio")
